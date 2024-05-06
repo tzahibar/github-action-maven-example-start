@@ -64,6 +64,4 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
       - name: Run Main Function
-        run: java -jar staging/*jar-with-dependencies.jar
-        with:
-          who-to-greet: 'tzahi'
+        run: java -jar staging/*jar-with-dependencies.jar "tzahi"
