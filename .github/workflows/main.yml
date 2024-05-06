@@ -55,15 +55,3 @@ jobs:
         run: docker build -t ${{ secrets.DOCKER_REPO }}:latest .
       - name: Publish Docker image
         run: docker push ${{ secrets.DOCKER_REPO }}
-
-  execute-main-function:
-    name: Execute Main Function
-    runs-on: ubuntu-latest
-    needs:
-      - publish-job
-      - build-docker-image
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-      - name: Run Main Function
-        run: java -jar app.jar "tzahi"
