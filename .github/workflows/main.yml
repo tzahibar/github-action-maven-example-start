@@ -66,4 +66,4 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
       - name: Run Main Function
-        run: java -jar /workspace/target/*app.jar  "tzahi"
+        run: java -jar /app.jar  "tzahi"
