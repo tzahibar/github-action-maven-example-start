@@ -1,11 +1,6 @@
 # Use the official Maven image as the base image
 FROM maven:3.6.3-jdk-11
 
-# Install OpenJDK
-RUN apt-get update && \
-    apt-get install -y openjdk-11-jdk && \
-    apt-get clean;
-
 # Set the working directory
 WORKDIR /app
 
