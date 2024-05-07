@@ -1,17 +1,19 @@
-FROM maven:3.6.3-openjdk-14-slim AS build
-RUN mkdir -p /workspace
-WORKDIR /workspace
-COPY pom.xml /workspace
-COPY src /workspace/src
-RUN mvn -B package --file pom.xml -DskipTests
+# Use the official Maven image as the base image
+FROM maven:3.6.3-jdk-11
 
-FROM openjdk:14-slim
-COPY --from=build /workspace/target/*jar-with-dependencies.jar app.jar
-EXPOSE 6379
-#ENTRYPOINT ["java","-jar","/app.jar","$@"]
-# Copies your code file from your action repository to the filesystem path `/` of the container
+# Install OpenJDK
+RUN apt-get update && \
+    apt-get install -y openjdk-11-jdk && \
+    apt-get clean;
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the entrypoint script into the container
 COPY entrypoint.sh /entrypoint.sh
 
-# Set the correct permissions for the entrypoint script
+# Grant execute permissions to the entrypoint script
 RUN chmod +x /entrypoint.sh
+
+# Set the entrypoint for the container
 ENTRYPOINT ["/entrypoint.sh"]
