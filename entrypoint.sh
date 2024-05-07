@@ -1,6 +1,5 @@
 #!/bin/sh -l
 
 echo "Hello $1"
-time=$(date)
-echo "time=$time" >> $GITHUB_OUTPUT
+java -jar src/main/java/App.java "$1"
 
