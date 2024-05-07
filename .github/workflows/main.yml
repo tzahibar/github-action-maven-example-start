@@ -2,10 +2,17 @@
 name: Maven CI/CD
 
 on:
- push:
+  push:
     branches:
       - master
       - infra/DEV-1
+  workflow_dispatch:
+    inputs:
+      who-to-greet:
+        description: Who to greet in the log
+        required: true
+        default: "world"
+        type: string
 
 jobs:
   build_and_test:
@@ -13,21 +20,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up JDK 14
-      uses: actions/setup-java@v1
-      with:
-        java-version: 14
+      - uses: actions/checkout@v2
+      - name: Set up JDK 14
+        uses: actions/setup-java@v1
+        with:
+          java-version: 14
 
-    - name: Cache the Maven packages to speed up build
-      uses: actions/cache@v1
-      with:
-        path: ~/.m2
-        key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
-        restore-keys: ${{ runner.os }}-m2
+      - name: Cache the Maven packages to speed up build
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
+          restore-keys: ${{ runner.os }}-m2
 
-    - name: Build project with Maven
-      run: mvn -B package --file pom.xml
+      - name: Build project with Maven
+        run: mvn -B package --file pom.xml
 
   publish-job:
     runs-on: ubuntu-latest
@@ -61,5 +68,5 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKER_REPO }}:latest
-          args: |
+          with:
             ${{ inputs.who-to-greet }}
