@@ -5,6 +5,7 @@ on:
  push:
     branches:
       - master
+      - infra/DEV-1
 
 jobs:
   build_and_test:
