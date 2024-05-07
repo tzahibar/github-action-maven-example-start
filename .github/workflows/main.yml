@@ -55,6 +55,6 @@ jobs:
       - name: Build Container image
         run: |
           docker build -t ${{ secrets.DOCKER_REPO }}:latest .
-          build-args: who-to-greet
+          build-args: ${{ inputs.who-to-greet }}
       - name: Publish Docker image
         run: docker push ${{ secrets.DOCKER_REPO }}
