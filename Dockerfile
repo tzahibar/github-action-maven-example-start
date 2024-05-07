@@ -8,4 +8,4 @@ RUN mvn -B package --file pom.xml -DskipTests
 FROM openjdk:14-slim
 COPY --from=build /workspace/target/*jar-with-dependencies.jar app.jar
 EXPOSE 6379
-ENTRYPOINT ["java","-jar","/app.jar", "tzahi"]
+ENTRYPOINT ["java","-jar","/app.jar"]
