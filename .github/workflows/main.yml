@@ -68,5 +68,3 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKER_REPO }}:latest
-          with:
-            ${{ inputs.who-to-greet }}
