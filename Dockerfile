@@ -9,4 +9,9 @@ FROM openjdk:14-slim
 COPY --from=build /workspace/target/*jar-with-dependencies.jar app.jar
 EXPOSE 6379
 #ENTRYPOINT ["java","-jar","/app.jar","$@"]
+# Copies your code file from your action repository to the filesystem path `/` of the container
+COPY entrypoint.sh /entrypoint.sh
+
+# Set the correct permissions for the entrypoint script
+RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
