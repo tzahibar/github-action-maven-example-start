@@ -1,20 +1,11 @@
-# Use an official Maven image as the base image
-FROM maven:3.8.4-openjdk-11-slim AS build
+FROM maven:3.6.3-openjdk-14-slim AS build
+RUN mkdir -p /workspace
+WORKDIR /workspace
+COPY pom.xml /workspace
+COPY src /workspace/src
+RUN mvn -B package --file pom.xml -DskipTests
 
-# Set the working directory in the container
-WORKDIR /app
-
-# Copy the pom.xml file
-COPY pom.xml .
-
-# Download dependencies and build the application
-RUN mvn dependency:go-offline
-
-# Copy the application source code
-COPY src ./src
-
-# Build the application
-RUN mvn package
-
-# Set the entry point to run the Java application
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+FROM openjdk:14-slim
+COPY --from=build /workspace/target/*jar-with-dependencies.jar app.jar
+EXPOSE 6379
+ENTRYPOINT ["java","-jar","/app.jar asd"]
