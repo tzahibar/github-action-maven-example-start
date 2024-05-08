@@ -11,6 +11,4 @@ outputs:
     description: 'The time we greeted you'
 runs:
   using: 'docker'
-  image: 'docker://freshybs/github-action-maven-tutorial:latest'
-  args:
-    - ${{ inputs.who-to-greet }}
+  image: 'Dockerfile'
